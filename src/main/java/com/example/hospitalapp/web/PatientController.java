@@ -2,16 +2,21 @@ package com.example.hospitalapp.web;
 
 import com.example.hospitalapp.entities.Patient;
 import com.example.hospitalapp.repository.PatientRepository;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
+import javax.naming.Binding;
 import java.util.List;
 
 @Controller
@@ -41,4 +46,32 @@ public class PatientController {
    public String home(){
         return "redirect:/index";
    }
+    @GetMapping("/patients")
+
+   @ResponseBody
+   public List<Patient> listPatients(){
+        return patientRepository.findAll();
+   }
+    @GetMapping("/formPatients")
+
+   public String formPatients(Model model)
+    {   model.addAttribute("patient",new Patient());
+        return "formPatients";
+   }
+    @PostMapping(path = "/save")
+   public String save(Model model, @Valid Patient patient, BindingResult bindingResult,@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "") String keyword ){
+        if(bindingResult.hasErrors()) return "formPatients";
+        patientRepository.save(patient);
+        return "redirect:/index?page="+page+"&keyword="+keyword;
+   }
+    @GetMapping("/editPatients")
+
+    public String editPatients(Model model, Long id,String keyword,int page)
+    {   Patient patient=patientRepository.findById(id).orElse(null);
+        if(patient==null)throw new RuntimeException("Patient introuvable");
+        model.addAttribute("patient",new Patient());
+        model.addAttribute("page",page);
+        model.addAttribute("keyword",keyword);
+        return "editPatients";
+    }
 }
