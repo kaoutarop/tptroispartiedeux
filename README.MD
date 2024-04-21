@@ -12,4 +12,4 @@
 <img src="capture/editp2.png">
 <img src="capture/formp2.png">
 <img src="capture/modif.png">
-<img src="capture/patientaffiche.png">
+<img src="capture/patientaffichge.png">
