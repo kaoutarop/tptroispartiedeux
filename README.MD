@@ -13,3 +13,11 @@
 <img src="capture/formp2.png">
 <img src="capture/modif.png">
 <img src="capture/patientaffichge.png">
+<h1>Partie 3 du TP3</h1>
+
+<img src="capture/securite.png">
+<img src="capture/jdbc.png">
+<img src="capture/role.png">
+<img src="capture/user.png">
+<img src="capture/admin.png">
+ 
